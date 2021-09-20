@@ -1,0 +1,3 @@
+rootProject.name = 'opentele-ssh-agent'
+include 'core'
+include 'daemon'
