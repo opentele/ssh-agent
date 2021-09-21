@@ -48,6 +48,8 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.security:spring-security-test'
+
+    compile 'com.github.mwiede:jsch:0.1.67'
 }
 
 sourceSets {
