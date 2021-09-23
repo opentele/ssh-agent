@@ -4,8 +4,17 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UserInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ReverseSSHTunneler {
+
+    @Autowired
+    public ReverseSSHTunneler(ApplicationConfig applicationConfig) {
+        execute(applicationConfig.getHost(), applicationConfig.getUser(), applicationConfig.getFile());
+    }
+
     public void execute(String host, String user, String identityFile) {
         try {
             JSch jsch = new JSch();
@@ -22,7 +31,12 @@ public class ReverseSSHTunneler {
             session.setPortForwardingR(remotePort, localHost, localPort);
         } catch (JSchException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
+    }
+
+    public void close() {
+
     }
 
     public class JSchUserInfo implements UserInfo {
@@ -56,5 +70,4 @@ public class ReverseSSHTunneler {
             System.out.println(message);
         }
     }
-
 }
